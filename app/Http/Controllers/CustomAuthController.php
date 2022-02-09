@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
 class CustomAuthController extends Controller
 {
-    public function login()
-    {
-        return view('login');
-    }
+   
 
     public function registration()
     {
@@ -48,7 +45,7 @@ class CustomAuthController extends Controller
          if($user){
             if(Hash::check($req->password,$user->password)){
               $req->session()->put('loginId',$user->id);
-              return redirect('dashboard');
+              return view('guest');
             }
             else{
                 return back()->with('fail','Password Is Not Match....!!');
@@ -60,7 +57,10 @@ class CustomAuthController extends Controller
          }
     }
 
-    public function dashboard(){
-        return"Welcome !!! To Your Dashboard";
+    public function dashboard()
+    {
+        return view('dashboard');
     }
+
+  
 }
